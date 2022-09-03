@@ -1,0 +1,7 @@
+{
+  "name": "boxes",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
