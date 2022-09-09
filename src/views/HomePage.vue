@@ -42,8 +42,8 @@
                         </div>
                     </template>
                 </div>
-                <div v-else>
-                    <template v-if="totalScore > 0">
+                <div>
+                    <template v-if="totalScore >= columns * rows">
                         <div :class="player1 > player2 ? 'player1' : player2 > player1 ? 'player2' : ''" style="padding: 50px; font-size: 3rem;">
                             {{ player1 > player2 ? 'Player 1 wins!' : player2 > player1 ? 'Player 2 wins!' : 'It\'s a draw!' }}
                         </div>
@@ -164,7 +164,9 @@ export default defineComponent({
     watch: {
         totalScore(newVal){
             if(newVal >= this.columns * this.rows){
-                this.gameInPlay = false;
+                setTimeout(() => {
+                    this.gameInPlay = false;
+                }, 10000)
             }
         }
     }
@@ -237,7 +239,7 @@ export default defineComponent({
 }
 
 #board{
-    --skinny: 12px;
+    --skinny: 14px;
     --square: 50px;
     display: flex;
     flex-direction: row;
@@ -249,20 +251,24 @@ export default defineComponent({
 .skinny .skinny{
     width: var(--skinny);
     height: var(--skinny);
-    background-color: #ffffff;
+    background-color: #ffffff08;
     pointer-events: none;
 }
 .square .skinny{
-    width: var(--square);
+    width: calc(var(--square) + var(--skinny));
     height: var(--skinny);
-    color: #fff3;
+    color: #ffffff08;
     background-color: currentColor;
+    margin: 0px calc(0px - var(--skinny) / 2) 0px calc(0px - var(--skinny) / 2);
+    clip-path: polygon(0% 50%, calc(var(--skinny) / 2) 0%, calc(100% - calc(var(--skinny) / 2)) 0%, 100% 50%, calc(100% - calc(var(--skinny) / 2)) 100%, calc(var(--skinny) / 2) 100%);
 }
 .skinny .square{
     width: var(--skinny);
-    height: var(--square);
-    color: #fff3;
+    height: calc(var(--square) + var(--skinny));
+    color: #ffffff08;
     background-color: currentColor;
+    margin: calc(0px - var(--skinny) / 2) 0px calc(0px - var(--skinny) / 2) 0px;
+    clip-path: polygon(50% 0%, 100% calc(var(--skinny) / 2), 100% calc(100% - calc(var(--skinny) / 2)), 50% 100%, 0% calc(100% - calc(var(--skinny) / 2)), 0% calc(var(--skinny) / 2));
 }
 .square .square{
     width: var(--square);
@@ -272,7 +278,7 @@ export default defineComponent({
     background-color: currentColor;
 }
 .square .square.filled{
-    border: 1px solid #000;
+    border: 1px solid #0008;
 }
 
 p{
@@ -280,5 +286,6 @@ p{
 }
 input{
     width: 7ch;
+    background: #3b3b3b;
 }
 </style>
