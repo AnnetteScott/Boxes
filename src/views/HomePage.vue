@@ -101,16 +101,18 @@ export default defineComponent({
                 box2 = [col + 1, row];
             }
             
+            
+
             let stringArray = JSON.stringify(this.colouredLines)
             //For box 1
             let x = box1[0]//col
             let y = box1[1]//row
             let boxAdded = false;
             if(
-                stringArray.includes(`${[x, y + 1]}`) && 
-                stringArray.includes(`${[x, y - 1]}`) && 
-                stringArray.includes(`${[x + 1, y]}`) && 
-                stringArray.includes(`${[x - 1, y]}`)
+                stringArray.includes(`[${[x, y + 1]}]`) && 
+                stringArray.includes(`[${[x, y - 1]}]`) && 
+                stringArray.includes(`[${[x + 1, y]}]`) && 
+                stringArray.includes(`[${[x - 1, y]}]`)
             ){
                 this.colouredBoxes.push([box1, this.currentPlayerTurn]);
                 boxAdded = true;
@@ -122,10 +124,10 @@ export default defineComponent({
             x = box2[0]//col
             y = box2[1]//row
             if(
-                stringArray.includes(`${[x, y + 1]}`) && 
-                stringArray.includes(`${[x, y - 1]}`) && 
-                stringArray.includes(`${[x + 1, y]}`) && 
-                stringArray.includes(`${[x - 1, y]}`)
+                stringArray.includes(`[${[x, y + 1]}]`) && // Bottom Line
+                stringArray.includes(`[${[x, y - 1]}]`) && // Top Line
+                stringArray.includes(`[${[x + 1, y]}]`) && // Right Line
+                stringArray.includes(`[${[x - 1, y]}]`) // Left Line
             ){
                 this.colouredBoxes.push([box2, this.currentPlayerTurn]);
                 boxAdded = true;
@@ -135,7 +137,6 @@ export default defineComponent({
             if(!boxAdded){
                 this.currentPlayerTurn = !(this.currentPlayerTurn - 1) ? 2 : 1;
             }
-            
         },
         startGame(){
             this.gameInPlay = false;
@@ -159,15 +160,6 @@ export default defineComponent({
             this.colouredLines = [];
             this.colouredBoxes = [];
             this.currentPlayerTurn = 1;
-        }
-    },
-    watch: {
-        totalScore(newVal){
-            if(newVal >= this.columns * this.rows){
-                setTimeout(() => {
-                    this.gameInPlay = false;
-                }, 10000)
-            }
         }
     }
 });
@@ -239,7 +231,7 @@ export default defineComponent({
 }
 
 #board{
-    --skinny: 14px;
+    --skinny: 15px;
     --square: 50px;
     display: flex;
     flex-direction: row;
@@ -255,18 +247,24 @@ export default defineComponent({
     pointer-events: none;
 }
 .square .skinny{
-    width: calc(var(--square) + var(--skinny));
+    width: var(--square);
     height: var(--skinny);
     color: #ffffff08;
     background-color: currentColor;
+}
+.square .skinny:is(.player1, .player2){
+    width: calc(var(--square) + var(--skinny));
     margin: 0px calc(0px - var(--skinny) / 2) 0px calc(0px - var(--skinny) / 2);
     clip-path: polygon(0% 50%, calc(var(--skinny) / 2) 0%, calc(100% - calc(var(--skinny) / 2)) 0%, 100% 50%, calc(100% - calc(var(--skinny) / 2)) 100%, calc(var(--skinny) / 2) 100%);
 }
 .skinny .square{
     width: var(--skinny);
-    height: calc(var(--square) + var(--skinny));
+    height: var(--square);
     color: #ffffff08;
     background-color: currentColor;
+}
+.skinny .square:is(.player1, .player2){
+    height: calc(var(--square) + var(--skinny));
     margin: calc(0px - var(--skinny) / 2) 0px calc(0px - var(--skinny) / 2) 0px;
     clip-path: polygon(50% 0%, 100% calc(var(--skinny) / 2), 100% calc(100% - calc(var(--skinny) / 2)), 50% 100%, 0% calc(100% - calc(var(--skinny) / 2)), 0% calc(var(--skinny) / 2));
 }
