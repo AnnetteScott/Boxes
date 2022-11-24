@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package nz.co.annette.boxes;
 
 import com.getcapacitor.BridgeActivity;
 

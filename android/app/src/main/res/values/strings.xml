@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">boxes</string>
     <string name="title_activity_main">boxes</string>
-    <string name="package_name">io.ionic.starter</string>
-    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="package_name">nz.co.annette.boxes</string>
+    <string name="custom_url_scheme">nz.co.annette.boxes</string>
 </resources>

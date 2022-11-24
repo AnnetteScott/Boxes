@@ -67,9 +67,9 @@
                         </div>
                     </template>
                 </div>
-                <div>
+                <div id="winner_annoucement">
                     <template v-if="totalScore >= columns * rows && columns * rows != 0 ">
-                        <div style="padding: 50px; font-size: 3rem;text-align: center;">
+                        <div style="font-size: 3rem;text-align: center;">
                             <p v-if="highestPlayerScore == ''">It's a draw!</p>
                             <p v-else :class="`player${highestPlayerScore}`">Player {{highestPlayerScore }} wins!</p>
                         </div>
@@ -208,7 +208,8 @@ export default defineComponent({
             }
         },
         totalScore(){
-            const scoreArray = [this.player1Score, this.player2Score, this.player3Score, this.player4Score].sort().reverse()
+            const scoreArray = [this.player1Score, this.player2Score, this.player3Score, this.player4Score].sort((a, b) => a - b).reverse()
+            console.log(scoreArray)
             if(scoreArray[0] == scoreArray[1]){
                 this.highestPlayerScore = ''
             }
@@ -222,12 +223,26 @@ export default defineComponent({
 </script>
 
 <style>
+#winner_annoucement{
+    position: absolute;
+    top: 85px;
+    left: calc(50% - 160px);
+}
+
+#winner_annoucement > div > p{
+    background: #fffffff5;
+    padding: 3px;
+    border-radius: 3px;
+    color: black
+}
+
 #top_section{
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     border-bottom: 1px dashed black;
+    padding-top: 6px;
 }
 
 .title_section{
@@ -288,7 +303,7 @@ export default defineComponent({
 
 #bottom_section{
     width: 100%;
-    padding-top: 15px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
     align-items: center;

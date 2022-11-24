@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'nz.co.annette.boxes',
   appName: 'boxes',
   webDir: 'dist',
   bundledWebRuntime: false
